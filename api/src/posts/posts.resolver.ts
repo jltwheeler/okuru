@@ -25,4 +25,17 @@ export class PostsResolver {
   ): Promise<Post> {
     return this.postsService.create(createPostInput);
   }
+
+  @Mutation(() => Post, { nullable: true })
+  async updatePost(
+    @Args("id") id: number,
+    @Args("title") title: string,
+  ): Promise<Post> {
+    return this.postsService.updateOne(id, title);
+  }
+
+  @Mutation(() => Boolean)
+  async deletePost(@Args("id") id: number): Promise<boolean> {
+    return this.postsService.remove(id);
+  }
 }

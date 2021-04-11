@@ -16,6 +16,8 @@ type Query {
 
 type Mutation {
   createPost(createPostInput: CreatePostDto!): Post!
+  updatePost(title: String!, id: Float!): Post
+  deletePost(id: Float!): Boolean!
 }
 
 input CreatePostDto {

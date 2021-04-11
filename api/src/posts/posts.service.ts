@@ -27,7 +27,18 @@ export class PostService {
     return this.postRepository.findOne(id);
   }
 
-  async remove(id: string): Promise<void> {
-    await this.postRepository.delete(id);
+  async updateOne(id: number, title: string): Promise<any> {
+    const post = await this.findOne(id);
+    if (!post) return null;
+    return this.postRepository.save({ ...post, title });
+  }
+
+  async remove(id: number): Promise<boolean> {
+    try {
+      await this.postRepository.delete(id);
+    } catch {
+      return false;
+    }
+    return true;
   }
 }

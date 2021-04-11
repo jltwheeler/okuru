@@ -1,9 +1,9 @@
 import { Field, InputType } from "@nestjs/graphql";
-import { IsAlpha } from "class-validator";
+import { IsDefined } from "class-validator";
 
 @InputType()
 export class CreatePostDto {
-  @IsAlpha()
+  @IsDefined()
   @Field()
   title: string;
 }
