@@ -5,25 +5,18 @@ import { GraphQLModule } from "@nestjs/graphql";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { Connection } from "typeorm";
 
-import { __prod__ } from "./constants";
+import * as connectionOptions from "./config/ormconfig";
 import { PostModule } from "./posts/posts.module";
+import { UsersModule } from "./users/users.module";
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: "postgres",
-      host: "localhost",
-      port: 5432,
-      username: "admin",
-      password: "super_secret",
-      database: "okuru",
-      autoLoadEntities: true,
-      synchronize: __prod__ ? false : true,
-    }),
+    TypeOrmModule.forRoot(connectionOptions),
     GraphQLModule.forRoot({
       autoSchemaFile: join(process.cwd(), "src/schema.gql"),
     }),
     PostModule,
+    UsersModule,
   ],
 })
 export class AppModule {
