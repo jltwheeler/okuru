@@ -1,4 +1,3 @@
-import { join } from "path";
 import { config } from "dotenv";
 
 import { __prod__ } from "../constants";
@@ -16,8 +15,8 @@ const connectionOptions: ConnectionOptions = {
   password: __prod__ ? process.env.TYPEORM_PASSWORD : "super_secret",
   database: "okuru",
   entities: [Post, User],
-  synchronize: __prod__ ? false : true,
-  migrations: [join(__dirname, "src/migrations/*{.ts,.js}")],
+  synchronize: false,
+  migrations: ["dist/migrations/*.js"],
   cli: {
     migrationsDir: "src/migrations",
   },

@@ -2,6 +2,13 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type User {
+  id: Int!
+  createdAt: String!
+  updatedAt: String!
+  username: String!
+}
+
 type Post {
   id: Int!
   createdAt: String!
@@ -12,14 +19,23 @@ type Post {
 type Query {
   posts: [Post!]!
   post(id: Int!): Post
+  users: [User!]!
+  user(id: Int!): User!
 }
 
 type Mutation {
   createPost(createPostInput: CreatePostDto!): Post!
   updatePost(title: String!, id: Float!): Post
   deletePost(id: Float!): Boolean!
+  createUser(createUserInput: CreateUserInput!): User!
+  removeUser(id: Int!): User!
 }
 
 input CreatePostDto {
   title: String!
+}
+
+input CreateUserInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
 }
