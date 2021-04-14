@@ -9,6 +9,16 @@ type User {
   username: String!
 }
 
+type FieldError {
+  field: String!
+  message: String!
+}
+
+type UserResponse {
+  errors: [FieldError!]
+  user: User
+}
+
 type Post {
   id: Int!
   createdAt: String!
@@ -19,16 +29,14 @@ type Post {
 type Query {
   posts: [Post!]!
   post(id: Int!): Post
-  users: [User!]!
-  user(id: Int!): User!
 }
 
 type Mutation {
   createPost(createPostInput: CreatePostDto!): Post!
   updatePost(title: String!, id: Float!): Post
   deletePost(id: Float!): Boolean!
-  createUser(createUserInput: CreateUserInput!): User!
-  removeUser(id: Int!): User!
+  register(options: CreateUserInput!): UserResponse!
+  login(options: CreateUserInput!): UserResponse!
 }
 
 input CreatePostDto {
@@ -36,6 +44,9 @@ input CreatePostDto {
 }
 
 input CreateUserInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  """Username"""
+  username: String!
+
+  """Password"""
+  password: String!
 }
