@@ -33,6 +33,7 @@
     "@nestjs/platform-express": "^7.6.15",
     "@nestjs/typeorm": "^7.1.5",
     "apollo-server-express": "^2.22.2",
+    "argon2": "^0.27.2",
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
     "dotenv": "^8.2.0",
