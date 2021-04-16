@@ -3,12 +3,22 @@ import { Int, Resolver, Query, Mutation, Args } from "@nestjs/graphql";
 import { UsersService } from "./users.service";
 import { User, UserResponse } from "./user.entity";
 import { CreateUserInput } from "./dto/create-user.input";
+import { UseGuards } from "@nestjs/common";
+import { GqlAuthGuard } from "src/auth/guards/gql-auth.guard";
+import { CurrentUser } from "src/auth/current-user.decorator";
 
 @Resolver()
 export class UsersResolver {
   constructor(private readonly usersService: UsersService) {}
 
+  @Query(() => User)
+  @UseGuards(GqlAuthGuard)
+  whoAmI(@CurrentUser() user: User) {
+    return this.usersService.findOne(user.id);
+  }
+
   @Query(() => [User])
+  @UseGuards(GqlAuthGuard)
   users() {
     return this.usersService.findAll();
   }
