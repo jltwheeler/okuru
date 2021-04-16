@@ -7,6 +7,8 @@ import {
 } from "typeorm";
 import { Field, Int, ObjectType } from "@nestjs/graphql";
 
+import { FieldError } from "../utils/types";
+
 @Entity()
 @ObjectType()
 export class User {
@@ -27,16 +29,7 @@ export class User {
   username: string;
 
   @Column()
-  password: string;
-}
-
-@ObjectType()
-class FieldError {
-  @Field()
-  field: string;
-
-  @Field()
-  message: string;
+  password?: string;
 }
 
 @ObjectType()
@@ -46,4 +39,7 @@ export class UserResponse {
 
   @Field(() => User, { nullable: true })
   user?: User;
+
+  @Field({ nullable: true })
+  access_token?: string;
 }

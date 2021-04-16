@@ -4,7 +4,7 @@ import { Repository } from "typeorm";
 import * as argon2 from "argon2";
 
 import { CreateUserInput } from "./dto/create-user.input";
-import { User, UserResponse } from "./user.entity";
+import { User } from "./user.entity";
 
 @Injectable()
 export class UsersService {
@@ -13,17 +13,11 @@ export class UsersService {
     private userRepository: Repository<User>,
   ) {}
 
-  async create(options: CreateUserInput): Promise<UserResponse> {
+  async create(options: CreateUserInput): Promise<User | null> {
     const existingUser = await this.userRepository.findOne({
       username: options.username,
     });
-    if (existingUser) {
-      return {
-        errors: [
-          { field: "username", message: "That username is already taken!" },
-        ],
-      };
-    }
+    if (existingUser) return null;
 
     const newUser = new User();
     const hashedPassword = await argon2.hash(options.password);
@@ -31,28 +25,27 @@ export class UsersService {
     newUser.username = options.username;
     newUser.password = hashedPassword;
 
-    return { user: await this.userRepository.save(newUser) };
+    return await this.userRepository.save(newUser);
   }
 
-  async login(options: CreateUserInput): Promise<UserResponse> {
-    const user = await this.userRepository.findOne({
-      username: options.username,
+  async findByUsername(username: string): Promise<User | undefined> {
+    if (!username) return undefined;
+
+    return await this.userRepository.findOne({
+      username: username,
     });
-    if (!user) {
-      return {
-        errors: [
-          { field: "username", message: "That username doesn't exist!" },
-        ],
-      };
-    }
+  }
 
-    const valid = await argon2.verify(user.password, options.password);
-    if (!valid) {
-      return {
-        errors: [{ field: "password", message: "Incorrect password" }],
-      };
-    }
+  async findOne(id: number): Promise<User | null> {
+    if (!id) return null;
 
-    return { user };
+    const user = await this.userRepository.findOne(id);
+    if (!user) return null;
+
+    return user;
+  }
+
+  async findAll(): Promise<User[]> {
+    return this.userRepository.find();
   }
 }
