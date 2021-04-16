@@ -2,6 +2,11 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type FieldError {
+  field: String!
+  message: String!
+}
+
 type User {
   id: Int!
   createdAt: String!
@@ -9,14 +14,10 @@ type User {
   username: String!
 }
 
-type FieldError {
-  field: String!
-  message: String!
-}
-
 type UserResponse {
   errors: [FieldError!]
   user: User
+  access_token: String
 }
 
 type Post {
@@ -26,21 +27,25 @@ type Post {
   title: String!
 }
 
+type LoginResponse {
+  errors: [FieldError!]
+  access_token: String
+}
+
 type Query {
+  whoAmI: User!
+  users: [User!]!
+  user(id: Int!): UserResponse
   posts: [Post!]!
   post(id: Int!): Post
 }
 
 type Mutation {
+  login(options: CreateUserInput!): LoginResponse!
+  register(options: CreateUserInput!): UserResponse!
   createPost(createPostInput: CreatePostDto!): Post!
   updatePost(title: String!, id: Float!): Post
   deletePost(id: Float!): Boolean!
-  register(options: CreateUserInput!): UserResponse!
-  login(options: CreateUserInput!): UserResponse!
-}
-
-input CreatePostDto {
-  title: String!
 }
 
 input CreateUserInput {
@@ -49,4 +54,8 @@ input CreateUserInput {
 
   """Password"""
   password: String!
+}
+
+input CreatePostDto {
+  title: String!
 }
