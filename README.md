@@ -26,10 +26,10 @@ stuff.
 #### Backend
 
 - [Node.js](https://nodejs.org/en/)
-- [NestJS](https://docs.nestjs.com/) with [express.js](http://expressjs.com/)
+- [NestJS](https://docs.nestjs.com/) with [express.js](http://expressjs.com/) and `apollo-server-express`
 - [Apollo Server](https://www.apollographql.com/docs/apollo-server/)
 - [TypeORM](https://typeorm.io/#/)
-- [Passport](http://www.passportjs.org/)
+- [Passport](http://www.passportjs.org/) using jwt strategy
 - [PostgreSQL](https://www.postgresql.org/) database
 
 #### Infrastructure
