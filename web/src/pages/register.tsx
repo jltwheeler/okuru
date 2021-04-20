@@ -13,21 +13,6 @@ type LoginPayload = {
   password: string;
 };
 
-const REGISTER_MUTATION = gql`
-  mutation Register($username: String!, $password: String!) {
-    register(options: { username: $username, password: $password }) {
-      user {
-        id
-        username
-      }
-      errors {
-        message
-        field
-      }
-    }
-  }
-`;
-
 const Register: React.FC<registerProps> = ({}) => {
   const { formState, handleSubmit, register } = useForm<LoginPayload>();
   const [registerUser] = useRegisterMutation();
