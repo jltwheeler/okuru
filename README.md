@@ -20,6 +20,7 @@ stuff.
 - [Chakra UI](https://chakra-ui.com/)
 - [Zustand](https://github.com/pmndrs/zustand)
 - [Apollo Client](https://www.apollographql.com/docs/react/)
+- [GraphQL Code Generator](https://www.graphql-code-generator.com/)
 - [React Hook Form](https://react-hook-form.com/)
 
 #### Backend
