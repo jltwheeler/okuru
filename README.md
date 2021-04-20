@@ -20,15 +20,16 @@ stuff.
 - [Chakra UI](https://chakra-ui.com/)
 - [Zustand](https://github.com/pmndrs/zustand)
 - [Apollo Client](https://www.apollographql.com/docs/react/)
+- [GraphQL Code Generator](https://www.graphql-code-generator.com/)
 - [React Hook Form](https://react-hook-form.com/)
 
 #### Backend
 
 - [Node.js](https://nodejs.org/en/)
-- [NestJS](https://docs.nestjs.com/) with [express.js](http://expressjs.com/)
+- [NestJS](https://docs.nestjs.com/) with [express.js](http://expressjs.com/) and `apollo-server-express`
 - [Apollo Server](https://www.apollographql.com/docs/apollo-server/)
 - [TypeORM](https://typeorm.io/#/)
-- [Passport](http://www.passportjs.org/)
+- [Passport](http://www.passportjs.org/) using jwt strategy
 - [PostgreSQL](https://www.postgresql.org/) database
 
 #### Infrastructure
