@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import { Box, Button } from "@chakra-ui/react";
 import { Wrapper } from "src/components/Wrapper";
 import { InputField } from "src/components/InputField";
-import { gql } from "@apollo/client";
 import { useRegisterMutation } from "src/generated/graphql";
 
 interface registerProps {}
