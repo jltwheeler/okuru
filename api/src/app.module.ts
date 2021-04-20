@@ -15,6 +15,7 @@ import { UsersModule } from "./users/users.module";
     TypeOrmModule.forRoot(connectionOptions),
     GraphQLModule.forRoot({
       autoSchemaFile: join(process.cwd(), "src/schema.gql"),
+      cors: true,
     }),
     AuthModule,
     PostModule,
