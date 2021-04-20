@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form";
 import { Box, Button } from "@chakra-ui/react";
 import { Wrapper } from "src/components/Wrapper";
 import { InputField } from "src/components/InputField";
+import { gql } from "@apollo/client";
+import { useRegisterMutation } from "src/generated/graphql";
 
 interface registerProps {}
 
@@ -11,21 +13,33 @@ type LoginPayload = {
   password: string;
 };
 
+const REGISTER_MUTATION = gql`
+  mutation Register($username: String!, $password: String!) {
+    register(options: { username: $username, password: $password }) {
+      user {
+        id
+        username
+      }
+      errors {
+        message
+        field
+      }
+    }
+  }
+`;
+
 const Register: React.FC<registerProps> = ({}) => {
   const { formState, handleSubmit, register } = useForm<LoginPayload>();
+  const [registerUser] = useRegisterMutation();
 
   const validateName = (value: string): string | boolean => {
     if (!value) return "Enter a valueeee 😱 !";
     return true;
   };
 
-  const onSubmit = (values: LoginPayload) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        alert(JSON.stringify(values, null, 2));
-        resolve(true);
-      }, 1000);
-    });
+  const onSubmit = async (values: LoginPayload) => {
+    const response = await registerUser({ variables: { ...values } });
+    return response;
   };
 
   return (
