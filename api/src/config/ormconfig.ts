@@ -10,7 +10,7 @@ config();
 const connectionOptions: ConnectionOptions = {
   type: "postgres",
   host: __prod__ ? process.env.TYPEORM_HOST : "localhost",
-  port: __prod__ ? parseInt(process.env.TYPEORM_PORT) : 5432,
+  port: __prod__ ? parseInt(process.env.TYPEORM_PORT ?? "5432") : 5432,
   username: __prod__ ? process.env.TYPEORM_USERNAME : "admin",
   password: __prod__ ? process.env.TYPEORM_PASSWORD : "super_secret",
   database: "okuru",

@@ -16,7 +16,9 @@ export class PostsResolver {
   async post(
     @Args("id", { type: () => Int }) id: number,
   ): Promise<Post | null> {
-    return this.postsService.findOne(id);
+    const post = await this.postsService.findOne(id);
+    if (!post) return null;
+    return post;
   }
 
   @Mutation(() => Post)

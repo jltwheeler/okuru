@@ -14,22 +14,22 @@ import { FieldError } from "../utils/types";
 export class User {
   @Field(() => Int)
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @Field()
   @CreateDateColumn()
-  createdAt: string;
+  createdAt!: string;
 
   @Field()
   @UpdateDateColumn()
-  updatedAt: string;
+  updatedAt!: string;
 
   @Field()
   @Column({ unique: true })
-  username: string;
+  username!: string;
 
   @Column()
-  password?: string;
+  password!: string;
 }
 
 @ObjectType()

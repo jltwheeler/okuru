@@ -23,7 +23,7 @@ export class PostService {
     return this.postRepository.find();
   }
 
-  findOne(id: number): Promise<Post> {
+  findOne(id: number): Promise<Post | undefined> {
     return this.postRepository.findOne(id);
   }
 

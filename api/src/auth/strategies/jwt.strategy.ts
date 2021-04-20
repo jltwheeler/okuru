@@ -20,6 +20,11 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     username: string;
     sub: number;
   }): Promise<User | null> {
-    return this.userService.findByUsername(validationPayload.username);
+    const user = await this.userService.findByUsername(
+      validationPayload.username,
+    );
+    if (!user) return null;
+
+    return user;
   }
 }

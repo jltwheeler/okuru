@@ -12,17 +12,17 @@ import { Field, Int, ObjectType } from "@nestjs/graphql";
 export class Post {
   @Field(() => Int)
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @Field()
   @CreateDateColumn()
-  createdAt: string;
+  createdAt!: string;
 
   @Field()
   @UpdateDateColumn()
-  updatedAt: string;
+  updatedAt!: string;
 
   @Field()
   @Column()
-  title: string;
+  title!: string;
 }

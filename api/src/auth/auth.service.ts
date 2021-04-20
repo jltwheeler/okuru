@@ -35,7 +35,7 @@ export class AuthService {
     const decoded = this.jwtService.verify(token, {
       secret: JWT_SECRET,
     });
-    const user = this.usersService.findByUsername(decoded.username);
+    const user = await this.usersService.findByUsername(decoded.username);
 
     if (!user) {
       throw new Error("Unable to get the user from the decoded token");

@@ -5,5 +5,5 @@ import { IsDefined } from "class-validator";
 export class CreatePostDto {
   @IsDefined()
   @Field()
-  title: string;
+  title!: string;
 }
