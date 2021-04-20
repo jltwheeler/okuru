@@ -14,7 +14,7 @@ interface InputFieldProps<T> {
   type?: string;
   formState: FormState<T>;
   register: UseFormRegister<T>;
-  validateFunc?: any;
+  required?: boolean;
 }
 
 export const InputField = <T extends {}>({
@@ -24,11 +24,16 @@ export const InputField = <T extends {}>({
   type,
   register,
   formState,
-  validateFunc,
+  required = true,
 }: InputFieldProps<T>) => {
+  const validateField = (value: string): string | boolean => {
+    if (!value) return `Please enter a ${label}`;
+    return true;
+  };
+
   const options = {};
-  if (validateFunc) {
-    options["validate"] = validateFunc;
+  if (required) {
+    options["validate"] = validateField;
   }
 
   return (
