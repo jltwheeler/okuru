@@ -1,4 +1,5 @@
 import { Field, ObjectType } from "@nestjs/graphql";
+import { Request, Response } from "express";
 
 @ObjectType()
 export class FieldError {
@@ -11,4 +12,9 @@ export class FieldError {
 
 export interface ProcessEnv {
   NODE_ENV: string | undefined;
+}
+
+export interface GQLContext {
+  req: Request;
+  res: Response;
 }

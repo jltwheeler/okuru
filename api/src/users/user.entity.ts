@@ -7,7 +7,7 @@ import {
 } from "typeorm";
 import { Field, Int, ObjectType } from "@nestjs/graphql";
 
-import { FieldError } from "../utils/types";
+import { FieldError } from "../types";
 
 @Entity()
 @ObjectType()

@@ -1,7 +1,14 @@
-import { Resolver, Mutation, Args, ObjectType, Field } from "@nestjs/graphql";
-import { CreateUserInput } from "src/users/dto/create-user.input";
-import { FieldError } from "../utils/types";
+import {
+  Context,
+  Resolver,
+  Mutation,
+  Args,
+  ObjectType,
+  Field,
+} from "@nestjs/graphql";
 
+import { CreateUserInput } from "src/users/dto/create-user.input";
+import { FieldError, GQLContext } from "../types";
 import { AuthService } from "./auth.service";
 
 @ObjectType()
@@ -18,7 +25,10 @@ export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
 
   @Mutation(() => LoginResponse)
-  async login(@Args("options") options: CreateUserInput) {
+  async login(
+    @Args("options") options: CreateUserInput,
+    @Context() { res }: GQLContext,
+  ) {
     const user = await this.authService.validate(
       options.username,
       options.password,
@@ -29,6 +39,10 @@ export class AuthResolver {
         errors: [{ field: "password", message: "Incorrect user credentials" }],
       };
     }
-    return this.authService.login(user);
+
+    const refreshToken = this.authService.generateRefreshToken(user);
+    res.cookie("jid", refreshToken, { httpOnly: true });
+
+    return this.authService.generateAccessToken(user);
   }
 }

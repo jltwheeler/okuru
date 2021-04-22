@@ -6,8 +6,9 @@ import { UsersModule } from "../users/users.module";
 import { AuthResolver } from "./auth.resolver";
 import { AuthService } from "./auth.service";
 import { JwtStrategy } from "./strategies/jwt.strategy";
-import { JWT_SECRET } from "src/utils/constants";
+import { JWT_SECRET } from "src/constants";
 import { LocalStrategy } from "./strategies/local.strategy";
+import { AuthController } from "./auth.controller";
 
 @Module({
   imports: [
@@ -15,9 +16,10 @@ import { LocalStrategy } from "./strategies/local.strategy";
     PassportModule.register({ defaultStrategy: "jwt" }),
     JwtModule.register({
       secret: JWT_SECRET,
-      signOptions: { expiresIn: "3600s" },
+      signOptions: { expiresIn: "900s" },
     }),
   ],
   providers: [AuthResolver, AuthService, JwtStrategy, LocalStrategy],
+  controllers: [AuthController],
 })
 export class AuthModule {}

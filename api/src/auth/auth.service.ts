@@ -2,9 +2,15 @@ import { Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import * as argon2 from "argon2";
 
-import { JWT_SECRET } from "src/utils/constants";
+import { JWT_REFRESH_SECRET } from "src/constants";
 import { User } from "../users/user.entity";
 import { UsersService } from "../users/users.service";
+
+interface DecodedRefreshJwt {
+  sub: number;
+  iat: number;
+  exp: number;
+}
 
 @Injectable()
 export class AuthService {
@@ -23,7 +29,17 @@ export class AuthService {
     return valid ? user : null;
   }
 
-  async login(user: User): Promise<{ access_token: string }> {
+  generateRefreshToken(user: User): string {
+    return this.jwtService.sign(
+      { sub: user.id },
+      {
+        expiresIn: "7d",
+        secret: JWT_REFRESH_SECRET,
+      },
+    );
+  }
+
+  generateAccessToken(user: User): { access_token: string } {
     const payload = {
       username: user.username,
       sub: user.id,
@@ -31,11 +47,11 @@ export class AuthService {
     return { access_token: this.jwtService.sign(payload) };
   }
 
-  async verify(token: string): Promise<User> {
-    const decoded = this.jwtService.verify(token, {
-      secret: JWT_SECRET,
+  async verifyRefreshToken(token: string): Promise<User> {
+    const decoded: DecodedRefreshJwt = this.jwtService.verify(token, {
+      secret: JWT_REFRESH_SECRET,
     });
-    const user = await this.usersService.findByUsername(decoded.username);
+    const user = await this.usersService.findOne(decoded.sub);
 
     if (!user) {
       throw new Error("Unable to get the user from the decoded token");
