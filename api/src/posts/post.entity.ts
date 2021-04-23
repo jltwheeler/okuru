@@ -7,7 +7,7 @@ import {
 } from "typeorm";
 import { Field, Int, ObjectType } from "@nestjs/graphql";
 
-@Entity()
+@Entity({ name: "posts" })
 @ObjectType()
 export class Post {
   @Field(() => Int)

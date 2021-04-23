@@ -9,7 +9,7 @@ import { Field, Int, ObjectType } from "@nestjs/graphql";
 
 import { FieldError } from "../types";
 
-@Entity()
+@Entity({ name: "users" })
 @ObjectType()
 export class User {
   @Field(() => Int)
