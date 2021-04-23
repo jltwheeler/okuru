@@ -9,13 +9,17 @@ import * as connectionOptions from "./config/ormconfig";
 import { AuthModule } from "./auth/auth.module";
 import { PostModule } from "./posts/posts.module";
 import { UsersModule } from "./users/users.module";
+import { __prod__ } from "./constants";
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(connectionOptions),
     GraphQLModule.forRoot({
       autoSchemaFile: join(process.cwd(), "src/schema.gql"),
-      cors: true,
+      cors: {
+        origin: __prod__ ? "" : "http://localhost:3000",
+        credentials: true,
+      },
       context: ({ req, res }) => ({ req, res }),
     }),
     AuthModule,
