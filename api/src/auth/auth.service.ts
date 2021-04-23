@@ -8,6 +8,7 @@ import { UsersService } from "../users/users.service";
 
 interface DecodedRefreshJwt {
   sub: number;
+  tokenVersion: number;
   iat: number;
   exp: number;
 }
@@ -31,7 +32,7 @@ export class AuthService {
 
   generateRefreshToken(user: User): string {
     return this.jwtService.sign(
-      { sub: user.id },
+      { sub: user.id, tokenVersion: user.tokenVersion },
       {
         expiresIn: "7d",
         secret: JWT_REFRESH_SECRET,
@@ -56,6 +57,16 @@ export class AuthService {
     if (!user) {
       throw new Error("Unable to get the user from the decoded token");
     }
+
+    // Need to ensure the refresh token version is valid with the current user
+    if (decoded.tokenVersion !== user.tokenVersion) {
+      throw new Error("Invalid refresh token version");
+    }
     return user;
+  }
+
+  async revokeRefreshToken(userId: number) {
+    await this.usersService.incrementUserTokenVersion(userId);
+    return true;
   }
 }

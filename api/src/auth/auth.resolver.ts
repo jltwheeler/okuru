@@ -5,6 +5,7 @@ import {
   Args,
   ObjectType,
   Field,
+  Int,
 } from "@nestjs/graphql";
 
 import { CreateUserInput } from "src/users/dto/create-user.input";
@@ -23,6 +24,11 @@ export class LoginResponse {
 @Resolver()
 export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
+
+  async revoke(@Args("userId", { type: () => Int }) userId: number) {
+    await this.authService.revokeRefreshToken(userId);
+    return true;
+  }
 
   @Mutation(() => LoginResponse)
   async login(

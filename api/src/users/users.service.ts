@@ -48,4 +48,8 @@ export class UsersService {
   async findAll(): Promise<User[]> {
     return this.userRepository.find();
   }
+
+  incrementUserTokenVersion(userId: number) {
+    return this.userRepository.increment({ id: userId }, "tokenVersion", 1);
+  }
 }
