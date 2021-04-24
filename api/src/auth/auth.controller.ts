@@ -9,7 +9,7 @@ export class AuthController {
   @Post()
   async refresh(@Req() req: Request, @Res() res: Response) {
     const token = req.cookies.jid;
-    const invalidResponse = { ok: false, accessToken: "" };
+    const invalidResponse = { ok: false, access_token: "" };
 
     if (!token) {
       return res.json(invalidResponse);
@@ -28,7 +28,7 @@ export class AuthController {
     }
 
     const refreshToken = this.authService.generateRefreshToken(user);
-    res.cookie("jid", refreshToken, { httpOnly: true });
+    res.cookie("jid", refreshToken, { httpOnly: true, path: "/refresh_token" });
 
     return res.json(this.authService.generateAccessToken(user));
   }

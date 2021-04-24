@@ -42,6 +42,7 @@ type Query {
 
 type Mutation {
   login(options: CreateUserInput!): LoginResponse!
+  logout: Boolean!
   register(options: CreateUserInput!): UserResponse!
   createPost(createPostInput: CreatePostDto!): Post!
   updatePost(title: String!, id: Float!): Post

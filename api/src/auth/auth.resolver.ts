@@ -47,8 +47,14 @@ export class AuthResolver {
     }
 
     const refreshToken = this.authService.generateRefreshToken(user);
-    res.cookie("jid", refreshToken, { httpOnly: true });
+    res.cookie("jid", refreshToken, { httpOnly: true, path: "/refresh_token" });
 
     return this.authService.generateAccessToken(user);
+  }
+
+  @Mutation(() => Boolean)
+  logout(@Context() { res }: GQLContext) {
+    res.cookie("jid", "", { httpOnly: true });
+    return true;
   }
 }
